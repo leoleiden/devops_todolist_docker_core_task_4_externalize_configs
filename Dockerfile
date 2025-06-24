@@ -11,7 +11,9 @@ FROM python:${PYTHON_VERSION} as run
 
 WORKDIR /app
 
+ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
+
 
 COPY --from=builder /app .
 
