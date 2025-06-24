@@ -21,10 +21,16 @@ services:
     networks:
       - todoapp-net
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     restart: unless-stopped
   mysql:
     image: mysql-local:1.8.0
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     build:
       context: .
       dockerfile: Dockerfile.mysql
